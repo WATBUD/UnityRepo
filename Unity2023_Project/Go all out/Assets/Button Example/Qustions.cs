@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,20 +8,20 @@ public class Qustions : MonoBehaviour
 
     public string NowAnswer = "1";
     public ToggleGroup toggleGroup;
-    public GameObject AlertPanel;//ÃD¥Ø
-    public Button checkButton;//ÀË¬dµª®×
-    public Text qustionText;//ÃD¥Ø
-    public GameObject parsingPanel;//ÃD¥Ø
+    public GameObject AlertPanel;//é¡Œç›®
+    public Button checkButton;//æª¢æŸ¥ç­”æ¡ˆ
+    public Text qustionText;//é¡Œç›®
+    public GameObject parsingPanel;//é¡Œç›®
     public StartCountdown startCountdown;
-    public int questionNumber = 0;//²Ä´XÃD
-    public class QuestionBank//ÃD®w
+    public int questionNumber = 0;//ç¬¬å¹¾é¡Œ
+    public class QuestionBank//é¡Œåº«
     {
-        public string topic { get; set; }//ÃD¥Ø
-        public string answerIndex { get; set; }//ÃD¥Øµª®×¦ì¸m
-        public string[] fourAnswers = new string[4];//¥|­Óµª®×
-        public string parsingText ;//´£¥Ü¤å¦r
+        public string topic { get; set; }//é¡Œç›®
+        public string answerIndex { get; set; }//é¡Œç›®ç­”æ¡ˆä½ç½®
+        public string[] fourAnswers = new string[4];//å››å€‹ç­”æ¡ˆ
+        public string parsingText ;//æç¤ºæ–‡å­—
 
-        public QuestionBank(string topic, string answerIndex, string[] fourAnswers, string parsingText)//«Øºc¤l
+        public QuestionBank(string topic, string answerIndex, string[] fourAnswers, string parsingText)//å»ºæ§‹å­
         {
             this.answerIndex = answerIndex;
             this.topic = topic;
@@ -31,25 +31,25 @@ public class Qustions : MonoBehaviour
     }
 
     List<QuestionBank> questionBank = new List<QuestionBank>(){
-        new QuestionBank("ÃD¥Ø1:2*2=?", "4",new string[4]{"99", "244", "555", "4"},"¦A¥h¬İ¬İ¤E¤E­¼ªkªí?"),//²Ä0ÃD
-        new QuestionBank("ÃD¥Ø2:¥xÆW±`¥Î»y¨¥¬O=?", "3",new string[4]{"­^¤å", "¼Æ¾Ç", "°ê¤å", "«X¤å"},"¦A·Q·Q¬İ?"),//1
-        new QuestionBank("ÃD¥Ø3:¬ü°ê±`¥Î»y¨¥¬O=?", "1",new string[4]{"­^¤å", "¼Æ¾Ç", "°ê¤å", "«X¤å"},"¦A¥h¬İ¬İ¤E¤E­¼ªkªí?"),//1
+        new QuestionBank("é¡Œç›®1:2*2=?", "4",new string[4]{"99", "244", "555", "4"},"å†å»çœ‹çœ‹ä¹ä¹ä¹˜æ³•è¡¨?"),//ç¬¬0é¡Œ
+        new QuestionBank("é¡Œç›®2:å°ç£å¸¸ç”¨èªè¨€æ˜¯=?", "3",new string[4]{"è‹±æ–‡", "æ•¸å­¸", "åœ‹æ–‡", "ä¿„æ–‡"},"å†æƒ³æƒ³çœ‹?"),//1
+        new QuestionBank("é¡Œç›®3:ç¾åœ‹å¸¸ç”¨èªè¨€æ˜¯=?", "1",new string[4]{"è‹±æ–‡", "æ•¸å­¸", "åœ‹æ–‡", "ä¿„æ–‡"},"å†å»çœ‹çœ‹ä¹ä¹ä¹˜æ³•è¡¨?"),//1
 
     };
 
     // Start is called before the first frame update
-    void Start()//¶i¤Jµ{¦¡
+    void Start()//é€²å…¥ç¨‹å¼
     {
         Debug.Log(questionBank);
         checkButton.onClick.AddListener(() =>
         {
-            this.checkAnswer();//ÀË¬dµª®×
+            this.checkAnswer();//æª¢æŸ¥ç­”æ¡ˆ
         });
 
-        UpdateUI();//§ó·sÃD¥Ø
+        UpdateUI();//æ›´æ–°é¡Œç›®
     }
 
-    void UpdateUI()//§ó·sÃD¥Ø
+    void UpdateUI()//æ›´æ–°é¡Œç›®
     {
         Toggle[] answerGroup = this.GetComponentsInChildren<Toggle>();
         for (int i = 0; i < answerGroup.Length; i++)
@@ -67,25 +67,25 @@ public class Qustions : MonoBehaviour
         {
             if (t.isOn)
             {
-                if (t.name == questionBank[questionNumber].answerIndex)//µª¹ï
+                if (t.name == questionBank[questionNumber].answerIndex)//ç­”å°
 
                 {
                     if (questionNumber == questionBank.Count - 1)//0 2
                     {
-                        AlertPanel.SetActive(true);//§Ú¹LÃö¤F
-                        CancelInvoke("startCount");//¨ú®østartCountdown­p®É¾¹ªº­p®É
+                        AlertPanel.SetActive(true);//æˆ‘éé—œäº†
+                        CancelInvoke("startCount");//å–æ¶ˆstartCountdownè¨ˆæ™‚å™¨çš„è¨ˆæ™‚
                     }
                     else
                     {
-                        questionNumber += 1;//«e¶i¤U¤@ÃD 0+1
+                        questionNumber += 1;//å‰é€²ä¸‹ä¸€é¡Œ 0+1
                         UpdateUI();
                     }
                 }
-                else//µª¿ù
+                else//ç­”éŒ¯
                 {
-                    parsingPanel.GetComponentInChildren<Text>().text = questionBank[questionNumber].parsingText;//´£¥Ü¤å¦r
+                    parsingPanel.GetComponentInChildren<Text>().text = questionBank[questionNumber].parsingText;//æç¤ºæ–‡å­—
 
-                    parsingPanel.SetActive(true);//¸õ¥X¸ÑªR
+                    parsingPanel.SetActive(true);//è·³å‡ºè§£æ
 
                 }
 
